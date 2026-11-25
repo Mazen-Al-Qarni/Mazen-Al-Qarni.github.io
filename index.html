@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mazen Alqarni · Data Analyst</title>
+<meta name="description" content="Mazen Alqarni, Data Analyst in Riyadh. PL-300 certified Power BI developer: HR, recruitment and retail dashboards.">
+<style>
+:root{
+  --bg:#030716; --ink:#F2F6FC; --mut:rgba(235,242,255,.62); --faint:rgba(235,242,255,.38);
+  --acc:#38C9E6; --acc2:#2F62D6; --vio:#5B55C9;
+  --glass:rgba(255,255,255,.075); --glass2:rgba(255,255,255,.12);
+  --stroke:rgba(255,255,255,.16); --hi:rgba(255,255,255,.28);
+  --r:26px; --blur:saturate(180%) blur(28px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Inter,"Segoe UI",system-ui,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+
+/* ---------- living wallpaper ---------- */
+.wall{position:fixed;inset:0;z-index:-1;overflow:hidden;background:radial-gradient(120% 80% at 50% 0%,#0A1430 0%,var(--bg) 60%)}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.6;animation:float 22s ease-in-out infinite}
+.o1{width:520px;height:520px;background:#123A8C;top:-120px;right:-80px}
+.o2{width:440px;height:440px;background:#0D4F6B;top:38%;left:-140px;animation-delay:-7s;opacity:.5}
+.o3{width:380px;height:380px;background:#1E2466;bottom:-120px;right:18%;animation-delay:-13s;opacity:.55}
+@keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,30px) scale(1.08)}66%{transform:translate(-30px,20px) scale(.95)}}
+
+/* ---------- liquid glass ---------- */
+.glass{position:relative;background:linear-gradient(155deg,rgba(255,255,255,.13),rgba(255,255,255,.04) 45%,rgba(255,255,255,.07));
+  -webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);border:1px solid var(--stroke);border-radius:var(--r);
+  box-shadow:inset 0 1px 0 var(--hi),inset 0 -1px 0 rgba(255,255,255,.05),0 20px 50px rgba(0,0,0,.35)}
+.glass::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(120% 60% at 15% 0%,rgba(255,255,255,.16),transparent 55%)}
+
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+
+/* ---------- floating nav ---------- */
+nav.glass{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:50;display:flex;gap:4px;padding:6px;border-radius:999px}
+nav a{padding:9px 16px;border-radius:999px;font-size:14px;color:var(--mut);transition:.25s}
+nav a.on{background:rgba(255,255,255,.16);color:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+
+/* ---------- hero ---------- */
+.hero{min-height:92vh;display:grid;grid-template-columns:1.2fr .8fr;gap:36px;align-items:center;padding:110px 0 24px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;font-size:13px;color:var(--ink)}
+.live{width:8px;height:8px;border-radius:50%;background:#34D399;box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+h1{font-size:clamp(44px,6.2vw,76px);line-height:1.02;letter-spacing:-.035em;font-weight:800;margin:0 0 14px}
+.grad{background:linear-gradient(100deg,var(--acc),var(--acc2) 55%,var(--vio));-webkit-background-clip:text;background-clip:text;color:transparent}
+.type{font-size:clamp(18px,2.2vw,23px);color:var(--mut);min-height:1.6em}
+.type b{color:var(--ink);font-weight:600}
+.caret{display:inline-block;width:2px;height:1.05em;background:var(--acc);vertical-align:-3px;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border-radius:16px;font-weight:600;font-size:15px;transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn.p{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;box-shadow:0 10px 30px rgba(20,60,160,.45)}
+.btn.g{background:var(--glass2);border:1px solid var(--stroke);-webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur)}
+
+/* profile widget: LinkedIn-style card */
+.me{padding:0;overflow:hidden}
+.cover{height:118px;background:linear-gradient(120deg,#0E2A66,#114A70 55%,#211F5C);position:relative}
+.cover svg{position:absolute;inset:0;width:100%;height:100%}
+.me-body{padding:0 24px 24px;margin-top:-56px;position:relative}
+.av{width:112px;height:112px;border-radius:32px;padding:3px;background:linear-gradient(140deg,#8FE6FF,var(--acc2) 55%,var(--vio));
+  box-shadow:0 0 0 5px var(--bg),0 14px 32px rgba(0,0,0,.5)}
+.av img{width:100%;height:100%;border-radius:29px;object-fit:cover;object-position:center;display:block;background:#fff}
+.me h3{font-size:22px;letter-spacing:-.01em;margin-top:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.vf{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:rgba(47,213,240,.16);color:var(--acc);border:1px solid rgba(47,213,240,.4)}
+.hl{font-size:14.5px;line-height:1.45;margin-top:6px}
+.uni{font-size:13.5px;margin-top:6px}
+.meta{font-size:13px;color:var(--mut);margin-top:2px}
+.conn{font-size:13px;color:var(--mut);margin-top:6px}.conn b{color:var(--ink)}
+.otw{display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:6px 12px;border-radius:999px;font-size:12.5px;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);color:#A7F3D0}
+.pcount{display:flex;align-items:center;gap:12px;margin-top:16px;padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid var(--stroke);transition:background .25s,transform .25s}
+.pcount:hover{background:rgba(56,201,230,.12);transform:translateY(-2px)}
+.pcount b{font-size:30px;letter-spacing:-.02em;line-height:1}
+.pcount span{font-size:14px;color:var(--mut)}
+.pcount i{margin-left:auto;font-style:normal;font-size:13px;color:var(--acc);font-weight:600}
+.row3{display:grid;grid-template-columns:repeat(3,1fr);margin-top:16px;border-top:1px solid var(--stroke);border-bottom:1px solid var(--stroke)}
+.row3 a{padding:12px 0;text-align:center;border-radius:14px;transition:background .25s,transform .25s}.row3 a+a{border-left:1px solid var(--stroke);border-radius:0}
+.row3 a:hover{background:rgba(255,255,255,.07);transform:translateY(-2px)}
+.row3 b{font-size:22px;display:block;letter-spacing:-.02em}.row3 span{font-size:12px;color:var(--mut)}
+.now{display:flex;align-items:center;gap:10px;margin-top:14px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid var(--stroke);font-size:13px;color:var(--mut)}
+.now b{color:var(--ink);font-weight:600}
+.spin{width:14px;height:14px;flex:none;border-radius:50%;border:2px solid rgba(56,201,230,.25);border-top-color:var(--acc);animation:spin 1.1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.socials{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.socials a,.socials button{display:flex;flex-direction:column;align-items:center;gap:5px;padding:11px 4px 9px;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid var(--stroke);font-size:11.5px;color:var(--mut);transition:.25s}
+.socials svg{width:20px;height:20px;fill:var(--ink);color:var(--ink)}
+.socials button svg{fill:none}.socials a:last-child svg{fill:none}
+.socials a:hover,.socials button:hover{background:rgba(56,201,230,.16);border-color:rgba(56,201,230,.45);color:var(--ink);transform:translateY(-2px)}
+
+/* ---------- sections ---------- */
+section{padding:48px 0}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);font-weight:600}
+h2{font-size:clamp(30px,4vw,44px);letter-spacing:-.03em;margin:6px 0 10px}
+.sub{color:var(--mut);max-width:620px}
+
+/* ask me */
+.ask{display:grid;grid-template-columns:.9fr 1.1fr;gap:22px;margin-top:28px}
+.chips{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:22px}
+.chip{padding:11px 16px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid var(--stroke);font-size:14.5px;transition:.2s;text-align:left}
+.chip:hover,.chip.on{background:rgba(47,213,240,.18);border-color:rgba(47,213,240,.5)}
+.chat{padding:22px;min-height:340px;display:flex;flex-direction:column;gap:12px}
+.bub{max-width:86%;padding:12px 16px;border-radius:20px;font-size:15px;animation:pop .35s ease}
+.bub.q{align-self:flex-end;background:linear-gradient(135deg,#2F62D6,#1F44A8);border-bottom-right-radius:6px}
+.bub.a{align-self:flex-start;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.12);border-bottom-left-radius:6px}
+.dots span{display:inline-block;width:7px;height:7px;margin:0 2px;border-radius:50%;background:var(--mut);animation:dot 1.2s infinite}
+.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-4px)}}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
+
+/* projects */
+.seg{display:inline-flex;padding:4px;border-radius:14px;margin:24px 0 22px;gap:2px}
+.seg button{padding:8px 16px;border-radius:11px;font-size:14px;color:var(--mut);transition:.25s}
+.seg button.on{background:rgba(255,255,255,.18);color:var(--ink);box-shadow:0 2px 10px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.25)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.card{overflow:hidden;cursor:pointer;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.card:hover{transform:translateY(-6px)}
+.shot{position:relative;margin:10px 10px 0;border-radius:18px;overflow:hidden;aspect-ratio:16/9;background:#0B1430}
+.shot img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .6s}
+.card:hover .shot img{transform:scale(1.04)}
+.badge{position:absolute;top:10px;left:10px;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600;
+  background:rgba(5,10,26,.55);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.2)}
+.cb{padding:16px 20px 22px}
+.cb h3{font-size:19px;letter-spacing:-.01em}
+.cb p{color:var(--mut);font-size:14.5px;margin-top:6px}
+.kpis{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.kpi{padding:6px 11px;border-radius:12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);font-size:12.5px;color:var(--mut)}
+.kpi b{color:var(--ink)}
+.card.hide{display:none}
+
+/* sheet */
+.scrim{position:fixed;inset:0;background:rgba(2,6,18,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:.3s;z-index:80}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:50%;bottom:0;transform:translate(-50%,105%);width:min(980px,100%);max-height:92vh;overflow:auto;z-index:90;
+  border-radius:30px 30px 0 0;padding:14px 26px 30px;transition:transform .45s cubic-bezier(.2,.8,.2,1);background:linear-gradient(160deg,rgba(30,42,78,.86),rgba(12,20,44,.9))}
+.sheet.on{transform:translate(-50%,0)}
+.grab{width:44px;height:5px;border-radius:9px;background:rgba(255,255,255,.3);margin:0 auto 16px}
+.x{position:absolute;right:18px;top:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);font-size:18px}
+.sheet h3{font-size:26px;letter-spacing:-.02em;margin-bottom:4px}
+.frame{margin:18px 0;border-radius:20px;overflow:hidden;border:1px solid var(--stroke);aspect-ratio:16/9.6;background:#0B1430}
+.frame img,.frame iframe{width:100%;height:100%;border:0;display:block;object-fit:cover;object-position:top}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.sheet h4{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin:6px 0 10px}
+.sheet ul{list-style:none;display:grid;gap:9px}
+.sheet li{padding-left:18px;position:relative;color:var(--mut);font-size:15px}
+.sheet li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--acc)}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.data{display:inline-block;margin:0 0 18px;padding:6px 12px;border-radius:10px;font-size:13px;color:var(--mut);background:rgba(255,255,255,.06);border:1px solid var(--stroke)}
+.daxbox{margin-top:22px}
+.tag.fn{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;background:rgba(56,201,230,.1);border-color:rgba(56,201,230,.35);color:#BDEFFA}
+.panel{padding:18px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid var(--stroke)}
+.panel.rec{background:rgba(52,211,153,.07);border-color:rgba(52,211,153,.3)}
+.panel.rec h4{color:#6EE7B7}.panel.rec li::before{background:#34D399}
+.tag{padding:6px 11px;border-radius:10px;font-size:13px;background:rgba(79,139,255,.16);border:1px solid rgba(79,139,255,.35);color:#CFE0FF}
+
+/* journey + skills */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:28px}
+.one{margin-top:28px}
+.box{padding:24px}
+.tl{position:relative;padding-left:26px;display:grid;gap:20px;margin-top:8px}
+.tl::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--acc),transparent)}
+.tl div{position:relative}
+.tl div::before{content:"";position:absolute;left:-25px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--acc)}
+.tl small{color:var(--acc);font-size:12.5px;font-weight:600}
+.tl b{display:block;font-size:16px}.tl p{color:var(--mut);font-size:14px}
+.sk h4{font-size:14px;color:var(--mut);font-weight:600;margin:14px 0 9px}.sk h4:first-child{margin-top:4px}
+.sk .tags .tag{background:rgba(255,255,255,.07);border-color:var(--stroke);color:var(--ink);font-size:14px;padding:8px 13px}
+
+/* contact */
+.contact{padding:38px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;margin-top:28px}
+.contact h2{margin:0}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,120px);padding:12px 18px;border-radius:16px;z-index:99;transition:.35s;font-size:14px}
+.toast.on{transform:translate(-50%,0)}
+footer{color:var(--faint);font-size:13px;text-align:center;padding:30px 0 50px}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:860px){
+  .hero,.ask,.two,.cols{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
+  .hero{padding-top:100px;min-height:0;padding-bottom:8px}
+  section{padding:32px 0}
+  .chat{min-height:200px}
+  nav a{padding:8px 11px;font-size:13px}
+  .sheet{padding:12px 18px 26px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="wall"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+
+<nav class="glass" id="nav">
+  <a href="#home" class="on">Home</a><a href="#work">Projects</a><a href="#ask">About</a><a href="#journey">Journey</a><a href="#contact">Contact</a>
+</nav>
+
+<main class="wrap">
+  <!-- HERO -->
+  <header class="hero" id="home">
+    <div>
+      <h1>Hi, I’m Mazen.<br><span class="grad">I turn data into decisions.</span></h1>
+      <p class="type">I build <b id="tw"></b><span class="caret"></span></p>
+      <div class="cta">
+        <a class="btn p" href="#work">See my projects</a>
+        <a class="btn g" href="#ask">Ask about me</a>
+      </div>
+    </div>
+    <aside class="glass me reveal">
+      <div class="cover"><svg viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 92 L40 80 L80 86 L120 60 L160 70 L200 44 L240 52 L280 30 L320 38 L360 18 L400 24 L400 120 L0 120Z" fill="rgba(255,255,255,.10)"/>
+        <path d="M0 92 L40 80 L80 86 L120 60 L160 70 L200 44 L240 52 L280 30 L320 38 L360 18 L400 24" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2"/>
+        <g fill="rgba(255,255,255,.14)"><rect x="18" y="98" width="14" height="22"/><rect x="38" y="90" width="14" height="30"/><rect x="58" y="94" width="14" height="26"/></g>
+      </svg></div>
+      <div class="me-body">
+        <div class="av"><img src="img/me.jpg" alt="Mazen Alqarni"></div>
+        <h3>Mazen Alqarni <span class="vf" title="Microsoft Certified">PL-300</span></h3>
+        <p class="hl">Data Analyst | Power BI (PL-300) | Excel (MOS) | Business Intelligence | Data Visualization | KPI Dashboards | English Language &amp; Literature</p>
+        <p class="uni">Prince Sattam bin Abdulaziz University</p>
+        <p class="meta">Riyadh, Saudi Arabia</p>
+        <span class="otw"><span class="live"></span>Open to Data Analyst roles</span>
+        <a class="pcount" href="#work"><b data-count="4">0</b><span>Power BI projects</span><i>View →</i></a>
+      </div>
+    </aside>
+  </header>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="reveal">
+      <span class="eyebrow">Projects</span>
+      <h2>Dashboards that answer questions.</h2>
+      <p class="sub">Each project starts from a business question and ends with a finding. Tap a card to see the details and the live report.</p>
+    </div>
+    <div class="seg glass reveal" id="seg">
+      <button class="on" data-f="all">All</button><button data-f="hr">HR</button><button data-f="sales">Sales</button>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- ASK -->
+  <section id="ask" class="reveal">
+    <span class="eyebrow">About</span>
+    <h2>Ask me anything.</h2>
+    <p class="sub">Pick a question, and I’ll answer it like I would in an interview.</p>
+    <div class="ask">
+      <div class="glass chips" id="chips"></div>
+      <div class="glass chat" id="chat"><div class="bub a">Hi! I’m Mazen, a Data Analyst in Riyadh. Tap a question to get to know me. 👋</div></div>
+    </div>
+  </section>
+
+  <!-- JOURNEY -->
+  <section id="journey">
+    <div class="reveal"><span class="eyebrow">Journey</span><h2>Experience &amp; certifications.</h2></div>
+    <div class="one">
+      <div class="glass box reveal">
+        <div class="tl">
+          <div><small>Nov 2026</small><b>Power BI Lecturer · King Saud University</b><p>Miras Program, PL-300 Preparation Course. Contributed 145 hours: taught Power BI hands-on (Power Query, data modeling, DAX and report design), then prepared students for the PL-300 exam, with daily quizzes, a theory exam and a final project.</p></div>
+          <div><small>Sep 2026</small><b>Microsoft Certified: Power BI Data Analyst Associate</b><p>PL-300, after the TVTC Investment Academy program (Apr 2026).</p></div>
+          <div><small>Feb 2026</small><b>Microsoft Office Specialist: Excel 2019 Associate</b><p>MOS training at Modern Studies Institute, TVTC (Nov 2025).</p></div>
+          <div><small>2020 – 2025</small><b>B.A. English Language &amp; Literature</b><p>Prince Sattam bin Abdulaziz University. Graduation project: translated a book from English to Arabic. The reason my reports read clearly.</p></div>
+        </div>
+      </div>
+        </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="reveal">
+    <div class="glass contact">
+      <div><span class="eyebrow">Contact</span><h2>Let’s talk data.</h2><p class="sub">Open to Data Analyst and BI roles in Riyadh.</p></div>
+      <div class="cta" style="margin:0">
+        <button class="btn p" id="copy">Copy email</button>
+        <a class="btn g" href="https://www.linkedin.com/in/mazen-alqarni-" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+  <footer>© 2026 Mazen Alqarni · Dashboards use synthetic data built for learning and portfolio purposes.</footer>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet glass" id="sheet" role="dialog" aria-modal="true"><div class="grab"></div><button class="x" id="x" aria-label="Close">✕</button><div id="sheetBody"></div></div>
+<div class="toast glass" id="toast">Email copied ✓</div>
+
+<script>
+/* ===== Edit here: your links ===== */
+const EMAIL = "mn.qarni8@gmail.com";
+const PROJECTS = [
+ { id:"ta", cat:"hr", isNew:true, img:"img/ta.jpg",
+   title:"KSA HR Talent Acquisition",
+   blurb:"Where do we lose candidates, how fast do we hire, and are we meeting Saudization targets?",
+   kpis:[["728","hires (+19%)"],["29","days to hire"],["63%","Saudization"]],
+   live:"https://app.powerbi.com/view?r=eyJrIjoiYjAyZWZhOGEtYWU3OS00ODFmLTllZWUtNWJlMGQ3MjJlZmNjIiwidCI6IjJiYjZlNWJjLWMxMDktNDdmYi05NDMzLWMxYzZmNGZhMzNmZiIsImMiOjl9",
+   github:"https://github.com/Mazen-Al-Qarni/KSA-HR-Talent-Acquisition-Dashboard",
+   found:["Saudization of new hires reached 63% vs a 60% target, but the Saudi share drops from 72% of applicants to 63% of hires.",
+          "Employee referrals keep 87% of hires after a year; recruitment agencies keep 47%.",
+          "Time to hire fell from 41 days (2022) to 29 days (2025), inside the 30-day target."],
+   built:["Star schema: two fact tables (applications and recruitment costs), four dimensions, and two disconnected tables for funnel stages and yearly targets.",
+          "DAX for funnel conversion, Saudization vs target, 1-year retention and year-over-year labels."],
+   data:"64,990 applications · 8 tables · 2022–2025 · synthetic",
+   challenge:["The “overall” retention figure ignored the hiring-source filter, so one selection showed 75% when the true figure was 60%. I traced it to a REMOVEFILTERS in the measure and let the visual’s own filters apply.",
+              "2022 has no prior year, so the comparison arrows were misleading. They now read “No prior-year data”."],
+   dax:["CALCULATE","COUNTROWS","SUM","AVERAGE","DIVIDE","KEEPFILTERS","REMOVEFILTERS","FILTER","SELECTEDVALUE","LOOKUPVALUE","SAMEPERIODLASTYEAR","MAX"],
+   tags:["Power BI","DAX","Star schema","HR analytics"] },
+ { id:"hr", cat:"hr", img:"img/hr.jpg",
+   title:"KSA HR Analytics & Saudization",
+   blurb:"Is the workforce meeting Saudization targets, and why do people leave?",
+   kpis:[["41.8%","Saudization"],["13.2%","attrition"],["2,133","headcount"]],
+   live:"https://app.powerbi.com/view?r=eyJrIjoiMTM2YWI3YzUtY2FlOC00NGNiLWI5NDYtOGNiM2M3YzVlYzg1IiwidCI6IjJiYjZlNWJjLWMxMDktNDdmYi05NDMzLWMxYzZmNGZhMzNmZiIsImMiOjl9", github:"https://github.com/Mazen-Al-Qarni/KSA-HR-Saudization-Dashboard",
+   found:["Saudization was 41.8% vs a 45% target, a gap of 68 employees.",
+          "Saudis hold 23% of leadership roles but 53% of entry roles.",
+          "41% of leavers quit within their first year."],
+   built:["Cleaned raw HR data in Power Query: removed duplicates, trimmed and cleaned text, standardised inconsistent spellings across 25 replace steps, fixed capitalisation, and added four custom columns.",
+          "Star schema with DAX for headcount, attrition, Saudization gaps and YoY comparisons.",
+          "Glass-style report with a reset button."],
+   data:"2,133 employees in 2025 · 2022–2025 · synthetic",
+   challenge:["Filtering on Non-Saudi made the new-hires card show 109%, because the Saudi count overrode the nationality filter. I wrapped it in KEEPFILTERS so the slicer and the measure agree.",
+              "When a filter left no Saudi hires, the card went blank instead of showing 0%. I made the measure return zero, so an empty result reads as a real number.",
+              "Hires and exits fall on different dates. Hires use the active link to the hire date; for exits I added an inactive link on the exit date and switched it on with USERELATIONSHIP, so each exit counts in the month it happened."],
+   dax:["CALCULATE","COUNTROWS","AVERAGE","DIVIDE","REMOVEFILTERS","KEEPFILTERS","ALL","USERELATIONSHIP","LOOKUPVALUE","SAMEPERIODLASTYEAR","ROUNDUP","MAX","MIN","ISBLANK","OR","YEAR"],
+   tags:["Power BI","Power Query","DAX","HR analytics"] },
+ { id:"retail", cat:"sales", img:"img/retail.jpg",
+   title:"KSA Retail Sales Performance",
+   blurb:"How did 2025 sales perform against target, and what do Saudi seasons do to revenue?",
+   kpis:[["SAR 45.8M","revenue (+20.9%)"],["103%","of target"],["2.7x","White Friday"]],
+   live:"https://app.powerbi.com/view?r=eyJrIjoiNDE5ZWY2YzctMTNmYy00NWEwLWEzOTctYTRmNzVkZjBmYWVhIiwidCI6IjJiYjZlNWJjLWMxMDktNDdmYi05NDMzLWMxYzZmNGZhMzNmZiIsImMiOjl9", github:"",
+   found:["Revenue reached SAR 45.8M in 2025 (+20.9% YoY), 103.3% of target.",
+          "Daily revenue is 2.7x higher during White Friday; daily orders rise 41% in Ramadan.",
+          "Online is 60% of orders."],
+   built:["100,000 orders across Saudi regions, 2022–2025.",
+          "Star schema with two fact tables, five dimensions and a custom Saudi seasonal calendar.",
+          "Top N, conditional formatting, seasonal tooltips and reset bookmarks."],
+   data:"100,000 orders · 2 fact tables · 5 dimensions · 2022–2025 · synthetic",
+   challenge:["Revenue, profit and order counts exclude cancelled orders (CALCULATE with an OrderStatus filter), so every total reflects completed sales only.",
+              "The same sales channel was recorded two ways (“WhatsApp Orders” and “WhatsApp”). I standardised it in Power Query so channel shares add up correctly.",
+              "Monthly targets sit in their own fact table, linked to the same date and region tables as sales, so actual vs target follows every filter."],
+   dax:["CALCULATE","SUM","COUNTROWS","DIVIDE","SAMEPERIODLASTYEAR"],
+   tags:["Power BI","DAX","Seasonality","Retail"] },
+ { id:"sales", cat:"sales", img:"img/sales.jpg",
+   title:"Sales & Customer Analytics",
+   blurb:"Which channels, customers and products drive revenue?",
+   kpis:[["93.3%","online revenue"],["SAR 49M","loyal customers"],["54%","high ratings"]],
+   live:"https://app.powerbi.com/view?r=eyJrIjoiOTY4NDBiYjUtMDBlZC00YjhjLThlZWEtZmJlYjBjNDA2MDgwIiwidCI6IjJiYjZlNWJjLWMxMDktNDdmYi05NDMzLWMxYzZmNGZhMzNmZiIsImMiOjl9", github:"",
+   found:["Online drove 93.3% of revenue (SAR 92M) vs 6.7% from stores.",
+          "Loyal customers brought SAR 49M, retail SAR 33M, new customers SAR 16M.",
+          "December is the peak month, followed by July."],
+   built:["Cleaned the raw sales data in Power Query: set data types, removed unused columns, blank rows and duplicates, and replaced inconsistent values.",
+          "A single-table model built on synthetic training-course data.",
+          "City-level map, dynamic slicers, animated icons and reset bookmarks."],
+   data:"Synthetic training-course data",
+   tags:["Power BI","Power Query","Maps","Sales"] }
+];
+const QA = [
+ ["Who are you, in one line?","A PL-300 certified Data Analyst in Riyadh who builds Power BI dashboards that start from a business question and end with a clear finding."],
+ ["What’s your strongest project?","HR Analytics & Saudization. It shows where a company stands on Saudization: 41.8% against a 45% target, 68 Saudis short. It also shows where the gap sits: Saudis hold 23% of leadership roles but 53% of entry roles, and 41% of leavers quit in their first year. I cleaned the raw HR data in Power Query myself before modeling it."],
+ ["Why HR and Saudization?","Because Saudization affects every company in the Kingdom: Nitaqat status shapes hiring, visas and growth. I wanted to build dashboards that answer the questions HR teams face every day: are we on target, where is the gap, and why are people leaving?"],
+ ["Why sales and Saudi seasons?","Because Saudi retail runs on its own calendar: Ramadan and White Friday move sales more than any normal month. I wanted a dashboard that answers what sales teams ask every week: are we on target, which region and category lead, and how much does each season really add? In my project, White Friday brought 2.7x the daily revenue and Ramadan 41% more daily orders."],
+ ["What did you teach at KSU?","Power BI in the Miras Program at King Saud University. I contributed 145 hours: first teaching students how to use Power BI hands-on (Power Query, data modeling, DAX and reports), then preparing them for the PL-300 exam. I also prepared the daily quizzes, a theory exam and the final project, and graded the students’ work."],
+ ["You studied English. How did you get here?","Literature taught me to read closely and explain clearly; for my graduation project I translated a whole book from English to Arabic. Then I added Excel (MOS) and Power BI (PL-300), and went on to teach Power BI at King Saud University: first how to use it hands-on, then preparing students for the PL-300 exam."],
+ ["Why Power BI?","It covers the whole path: Power Query to clean the data, a star schema to model it, DAX to measure it, and a report people actually use. I like owning all of it."],
+ ["Is the data real?","No. All dashboards use synthetic data I generated for learning, designed to behave like real Saudi company data."]
+];
+
+/* typewriter */
+const words=["Power BI dashboards.","DAX measures that hold up.","HR & Saudization analytics.","stories from messy data."];
+const tw=document.getElementById("tw");let wi=0,ci=0,del=false;
+(function type(){const w=words[wi];tw.textContent=w.slice(0,ci);
+ if(!del&&ci<w.length){ci++;setTimeout(type,55)}else if(!del){del=true;setTimeout(type,1600)}
+ else if(ci>0){ci--;setTimeout(type,25)}else{del=false;wi=(wi+1)%words.length;setTimeout(type,300)}})();
+
+/* count up */
+const counters=document.querySelectorAll("[data-count]");
+const runCount=el=>{const end=+el.dataset.count,suf=el.dataset.suf||"";let t0=null;
+ const step=t=>{t0??=t;const p=Math.min((t-t0)/1200,1);el.textContent=Math.round(end*(1-Math.pow(1-p,3)))+suf;if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step)};
+
+/* reveal + nav highlight */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");
+  e.target.querySelectorAll?.("[data-count]").forEach(c=>{if(!c.done){c.done=1;runCount(c)}});io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+const navLinks=[...document.querySelectorAll("nav a")];
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){navLinks.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+e.target.id))}}),{rootMargin:"-45% 0px -50% 0px"});
+["home","ask","work","journey","contact"].forEach(id=>so.observe(document.getElementById(id)));
+
+/* ask me */
+const chips=document.getElementById("chips"),chat=document.getElementById("chat");
+QA.forEach(([q,a])=>{const b=document.createElement("button");b.className="chip";b.textContent=q;
+ b.onclick=()=>{chips.querySelectorAll(".chip").forEach(c=>c.classList.remove("on"));b.classList.add("on");
+  chat.innerHTML="";const qb=document.createElement("div");qb.className="bub q";qb.textContent=q;chat.append(qb);
+  const t=document.createElement("div");t.className="bub a dots";t.innerHTML="<span></span><span></span><span></span>";
+  setTimeout(()=>chat.append(t),250);
+  setTimeout(()=>{t.className="bub a";t.textContent=a},1100)};
+ chips.append(b)});
+
+/* projects */
+const grid=document.getElementById("grid");
+PROJECTS.forEach(p=>{const c=document.createElement("article");c.className="glass card reveal";c.dataset.cat=p.cat;
+ c.innerHTML=`<div class="shot"><img src="${p.img}" alt="${p.title} dashboard" loading="lazy">${p.isNew?'<span class="badge">New</span>':""}</div>
+ <div class="cb"><h3>${p.title}</h3><p>${p.blurb}</p><div class="kpis">${p.kpis.map(k=>`<span class="kpi"><b>${k[0]}</b> ${k[1]}</span>`).join("")}</div></div>`;
+ c.onclick=()=>openSheet(p);grid.append(c);io.observe(c)});
+document.getElementById("seg").onclick=e=>{const b=e.target.closest("button");if(!b)return;
+ document.querySelectorAll("#seg button").forEach(x=>x.classList.toggle("on",x===b));
+ document.querySelectorAll(".card").forEach(c=>c.classList.toggle("hide",b.dataset.f!=="all"&&c.dataset.cat!==b.dataset.f))};
+
+/* sheet */
+const sheet=document.getElementById("sheet"),scrim=document.getElementById("scrim"),body=document.getElementById("sheetBody");
+function openSheet(p){
+ body.innerHTML=`<h3>${p.title}</h3><p class="sub">${p.blurb}</p>
+ <div class="frame" id="frame"><img src="${p.img}" alt="${p.title}"></div>
+ <div class="cta" style="margin:0 0 22px">
+   ${p.live?`<a class="btn p" href="${p.live}" target="_blank" rel="noopener">View live dashboard ↗</a>`:""}
+ </div>
+ ${p.data?`<p class="data">${p.data}</p>`:""}
+ <div class="cols"><div><h4>What I found</h4><ul>${p.found.map(x=>`<li>${x}</li>`).join("")}</ul></div>
+ <div><h4>How I built it</h4><ul>${p.built.map(x=>`<li>${x}</li>`).join("")}</ul><h4 style="margin-top:18px">Tools</h4><div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+ ${p.dax?`<h4 style="margin-top:18px">DAX functions used</h4><div class="tags">${p.dax.map(f=>`<span class="tag fn">${f}</span>`).join("")}</div>`:""}</div></div>
+ ${p.challenge||p.recommend?`<div class="${p.challenge&&p.recommend?"cols":""}" style="margin-top:24px">
+   ${p.challenge?`<div class="panel"><h4>Challenges I solved</h4><ul>${p.challenge.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}
+   ${p.recommend?`<div class="panel rec"><h4>What I’d recommend</h4><ul>${p.recommend.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}
+ </div>`:""}`;
+ sheet.classList.add("on");scrim.classList.add("on");document.body.style.overflow="hidden"}
+function closeSheet(){sheet.classList.remove("on");scrim.classList.remove("on");document.body.style.overflow=""}
+scrim.onclick=closeSheet;document.getElementById("x").onclick=closeSheet;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
+
+/* copy email */
+const copyMail=async()=>{
+ try{await navigator.clipboard.writeText(EMAIL)}catch(_){location.href="mailto:"+EMAIL;return}
+ const t=document.getElementById("toast");t.classList.add("on");setTimeout(()=>t.classList.remove("on"),1800)};
+document.getElementById("copy").onclick=copyMail;
+document.querySelectorAll(".copyMail").forEach(b=>b.onclick=copyMail);
+</script>
+</body>
+</html>
