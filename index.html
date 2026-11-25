@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mazen Alqarni · Data Analyst</title>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mazen-al-qarni.github.io/">
+<meta property="og:title" content="Mazen Alqarni · Data Analyst">
+<meta property="og:description" content="PL-300 certified Data Analyst in Riyadh. Power BI dashboards for HR, Saudization, recruitment and retail.">
+<meta property="og:image" content="https://mazen-al-qarni.github.io/img/ta.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%232F62D6'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='700' font-size='28' fill='white' text-anchor='middle'%3EMA%3C/text%3E%3C/svg%3E">
 <meta name="description" content="Mazen Alqarni, Data Analyst in Riyadh. PL-300 certified Power BI developer: HR, recruitment and retail dashboards.">
 <style>
 :root{
@@ -140,7 +147,7 @@ h2{font-size:clamp(30px,4vw,44px);letter-spacing:-.03em;margin:6px 0 10px}
   border-radius:30px 30px 0 0;padding:14px 26px 30px;transition:transform .45s cubic-bezier(.2,.8,.2,1);background:linear-gradient(160deg,rgba(30,42,78,.86),rgba(12,20,44,.9))}
 .sheet.on{transform:translate(-50%,0)}
 .grab{width:44px;height:5px;border-radius:9px;background:rgba(255,255,255,.3);margin:0 auto 16px}
-.x{position:absolute;right:18px;top:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);font-size:18px}
+.x{position:absolute;right:16px;top:12px;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.12);font-size:18px}
 .sheet h3{font-size:26px;letter-spacing:-.02em;margin-bottom:4px}
 .frame{margin:18px 0;border-radius:20px;overflow:hidden;border:1px solid var(--stroke);aspect-ratio:16/9.6;background:#0B1430}
 .frame img,.frame iframe{width:100%;height:100%;border:0;display:block;object-fit:cover;object-position:top}
@@ -187,7 +194,7 @@ footer{color:var(--faint);font-size:13px;text-align:center;padding:30px 0 50px}
   .hero{padding-top:100px;min-height:0;padding-bottom:8px}
   section{padding:32px 0}
   .chat{min-height:200px}
-  nav a{padding:8px 11px;font-size:13px}
+  nav a{padding:12px 10px;font-size:13px}
   .sheet{padding:12px 18px 26px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
@@ -338,7 +345,7 @@ const PROJECTS = [
               "The same sales channel was recorded two ways (“WhatsApp Orders” and “WhatsApp”). I standardised it in Power Query so channel shares add up correctly.",
               "Monthly targets sit in their own fact table, linked to the same date and region tables as sales, so actual vs target follows every filter."],
    dax:["CALCULATE","SUM","COUNTROWS","DIVIDE","SAMEPERIODLASTYEAR"],
-   tags:["Power BI","DAX","Seasonality","Retail"] },
+   tags:["Power BI","Power Query","DAX","Seasonality","Retail"] },
  { id:"sales", cat:"sales", img:"img/sales.jpg",
    title:"Sales & Customer Analytics",
    blurb:"Which channels, customers and products drive revenue?",
@@ -348,9 +355,8 @@ const PROJECTS = [
           "Loyal customers brought SAR 49M, retail SAR 33M, new customers SAR 16M.",
           "December is the peak month, followed by July."],
    built:["Cleaned the raw sales data in Power Query: set data types, removed unused columns, blank rows and duplicates, and replaced inconsistent values.",
-          "A single-table model built on synthetic training-course data.",
           "City-level map, dynamic slicers, animated icons and reset bookmarks."],
-   data:"Synthetic training-course data",
+   data:"Single table · synthetic training-course data",
    tags:["Power BI","Power Query","Maps","Sales"] }
 ];
 const QA = [
@@ -361,7 +367,7 @@ const QA = [
  ["What did you teach at KSU?","Power BI in the Miras Program at King Saud University. I contributed 145 hours: first teaching students how to use Power BI hands-on (Power Query, data modeling, DAX and reports), then preparing them for the PL-300 exam. I also prepared the daily quizzes, a theory exam and the final project, and graded the students’ work."],
  ["You studied English. How did you get here?","Literature taught me to read closely and explain clearly; for my graduation project I translated a whole book from English to Arabic. Then I added Excel (MOS) and Power BI (PL-300), and went on to teach Power BI at King Saud University: first how to use it hands-on, then preparing students for the PL-300 exam."],
  ["Why Power BI?","It covers the whole path: Power Query to clean the data, a star schema to model it, DAX to measure it, and a report people actually use. I like owning all of it."],
- ["Is the data real?","No. All dashboards use synthetic data I generated for learning, designed to behave like real Saudi company data."]
+ ["Is the data real?","No. All four dashboards use synthetic data. I generated the datasets for three of them, designed to behave like real Saudi company data; Sales & Customer uses a dataset from a training course."]
 ];
 
 /* typewriter */
