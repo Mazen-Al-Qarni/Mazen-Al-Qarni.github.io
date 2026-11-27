@@ -155,6 +155,18 @@ h2{font-size:clamp(30px,4vw,44px);letter-spacing:-.03em;margin:6px 0 10px}
 .sheet h3{font-size:26px;letter-spacing:-.02em;margin-bottom:4px}
 .frame{margin:18px 0;border-radius:20px;overflow:hidden;border:1px solid var(--stroke);aspect-ratio:16/9.6;background:#0B1430}
 .frame img,.frame iframe{width:100%;height:100%;border:0;display:block;object-fit:cover;object-position:top}
+.frame{position:relative;transition:background .3s}
+.frame img{cursor:zoom-in}
+.frame img.fit{object-fit:contain;object-position:center}
+.frame .zoom{position:absolute;right:10px;bottom:10px;font-size:12px;padding:5px 10px;border-radius:99px;background:rgba(3,7,22,.72);color:#fff;pointer-events:none}
+.lb{position:fixed;inset:0;z-index:200;background:rgba(3,7,22,.94);display:none;align-items:center;justify-content:center;padding:60px 12px 20px}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;background:#fff}
+.lb button{position:absolute;top:14px;right:14px;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:20px}
+.gal{display:inline-flex;padding:4px;border-radius:14px;gap:2px;margin:-6px 0 18px;flex-wrap:wrap}
+.gal button{padding:7px 14px;border-radius:11px;font-size:13px;color:var(--mut);transition:.25s}
+@media(max-width:520px){.gal button{padding:7px 10px;font-size:12.5px}}
+.gal button.on{background:rgba(255,255,255,.18);color:var(--ink);box-shadow:0 2px 10px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.25)}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .sheet h4{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin:6px 0 10px}
 .sheet ul{list-style:none;display:grid;gap:9px}
@@ -270,10 +282,10 @@ footer{color:var(--faint);font-size:13px;text-align:center;padding:30px 0 50px}
     <div class="one">
       <div class="glass box reveal">
         <div class="tl">
-          <div><small>Nov 2026</small><b>Power BI Lecturer · King Saud University</b><p>Miras Program, PL-300 Preparation Course. Contributed 145 hours: taught Power BI hands-on (Power Query, data modeling, DAX and report design), then prepared students for the PL-300 exam, with daily quizzes, a theory exam and a final project.</p></div>
-          <div><small>Sep 2026</small><b>Microsoft Certified: Power BI Data Analyst Associate</b><p>PL-300, after the TVTC Investment Academy program (Apr 2026).</p></div>
-          <div><small>Feb 2026</small><b>Microsoft Office Specialist: Excel 2019 Associate</b><p>MOS training at Modern Studies Institute, TVTC (Nov 2025).</p></div>
-          <div><small>2020 – 2025</small><b>B.A. English Language &amp; Literature</b><p>Prince Sattam bin Abdulaziz University. Graduation project: translated a book from English to Arabic. The reason my reports read clearly.</p></div>
+          <div><small>Nov 2026</small><b>Power BI Lecturer · King Saud University</b><p>PL-300 Preparation Course, Miras Program. Contributed 145 hours: first trained students to use Power BI hands-on (Power Query, data modeling, DAX and report design), then prepared them for the Microsoft PL-300 certification exam. Prepared daily quizzes, a theory exam and a final project, and graded the students’ work.</p></div>
+          <div><small>Sep 2026</small><b>Microsoft Certified: Power BI Data Analyst Associate</b><p>Earned after completing the Certified Data Analyst (PL-300) training course, Investment Academy, TVTC (Apr 2026).</p></div>
+          <div><small>Feb 2026</small><b>Microsoft Office Specialist: Excel 2019 Associate</b><p>Earned after completing the Microsoft Office Specialist (MOS) training course, Modern Studies Institute, TVTC (Nov 2025).</p></div>
+          <div><small>2020 – 2025</small><b>B.A. English Language &amp; Literature</b><p>Prince Sattam bin Abdulaziz University. Graduation project: translated a book from English to Arabic. It’s why my reports read clearly.</p></div>
         </div>
       </div>
         </div>
@@ -282,7 +294,7 @@ footer{color:var(--faint);font-size:13px;text-align:center;padding:30px 0 50px}
   <!-- CONTACT -->
   <section id="contact" class="reveal">
     <div class="glass contact">
-      <div><span class="eyebrow">Contact</span><h2>Let’s talk data.</h2><p class="sub">Open to Data Analyst and BI roles in Riyadh.</p></div>
+      <div><span class="eyebrow">Contact</span><h2>Get in touch.</h2><p class="sub">Open to Data Analyst and BI roles in Riyadh.</p></div>
       <div class="cta" style="margin:0">
         <button class="btn p" id="copy">Copy email</button>
         <a class="btn g" href="https://www.linkedin.com/in/mazen-alqarni-" target="_blank" rel="noopener">LinkedIn</a>
@@ -294,6 +306,7 @@ footer{color:var(--faint);font-size:13px;text-align:center;padding:30px 0 50px}
 
 <div class="scrim" id="scrim"></div>
 <div class="sheet glass" id="sheet" role="dialog" aria-modal="true"><div class="grab"></div><button class="x" id="x" aria-label="Close">✕</button><div id="sheetBody"></div></div>
+<div class="lb" id="lb"><button id="lbX" aria-label="Close">✕</button><img id="lbImg" alt=""></div>
 <div class="toast glass" id="toast">Email copied ✓</div>
 
 <script>
@@ -315,7 +328,8 @@ const PROJECTS = [
    challenge:["The “overall” retention figure ignored the hiring-source filter, so one selection showed 75% when the true figure was 60%. I traced it to a REMOVEFILTERS in the measure and let the visual’s own filters apply.",
               "2022 has no prior year, so the comparison arrows were misleading. They now read “No prior-year data”."],
    dax:["CALCULATE","COUNTROWS","SUM","AVERAGE","DIVIDE","KEEPFILTERS","REMOVEFILTERS","FILTER","SELECTEDVALUE","LOOKUPVALUE","SAMEPERIODLASTYEAR","MAX"],
-   tags:["Power BI","DAX","Star schema","HR analytics"] },
+   gallery:[{label:"Data model",src:"img/ta_model.png",bg:"#E6E6E6"}],
+   tags:["Power BI","DAX"] },
  { id:"hr", cat:"hr", img:"img/hr.jpg",
    title:"KSA HR Analytics & Saudization",
    blurb:"Is the workforce meeting Saudization targets, and why do people leave?",
@@ -324,7 +338,7 @@ const PROJECTS = [
    found:["Saudization was 41.8% vs a 45% target, a gap of 68 employees.",
           "Saudis hold 23% of leadership roles but 53% of entry roles.",
           "41% of leavers quit within their first year."],
-   built:["Cleaned raw HR data in Power Query: removed duplicates, trimmed and cleaned text, standardised inconsistent spellings across 25 replace steps, fixed capitalisation, and added four custom columns.",
+   built:["Cleaned raw HR data in Power Query: removed duplicates, trimmed and cleaned text, standardised inconsistent spellings across 25 replace steps, fixed capitalisation, and added four custom columns, including one that labels missing exit reasons as “Not specified”.",
           "Star schema with DAX for headcount, attrition, Saudization gaps and YoY comparisons.",
           "Glass-style report with a reset button."],
    data:"2,133 employees in 2025 · 2022–2025 · synthetic",
@@ -332,7 +346,8 @@ const PROJECTS = [
               "When a filter left no Saudi hires, the card went blank instead of showing 0%. I made the measure return zero, so an empty result reads as a real number.",
               "Hires and exits fall on different dates. Hires use the active link to the hire date; for exits I added an inactive link on the exit date and switched it on with USERELATIONSHIP, so each exit counts in the month it happened."],
    dax:["CALCULATE","COUNTROWS","AVERAGE","DIVIDE","REMOVEFILTERS","KEEPFILTERS","ALL","USERELATIONSHIP","LOOKUPVALUE","SAMEPERIODLASTYEAR","ROUNDUP","MAX","MIN","ISBLANK","OR","YEAR"],
-   tags:["Power BI","Power Query","DAX","HR analytics"] },
+   gallery:[{label:"Data model",src:"img/hr_model.png",bg:"#E6E6E6"},{label:"Power Query",src:"img/hr_pq.jpg",bg:"#F3F2F1"}],
+   tags:["Power BI","Power Query","DAX"] },
  { id:"retail", cat:"sales", img:"img/retail.jpg",
    title:"KSA Retail Sales Performance",
    blurb:"How did 2025 sales perform against target, and what do Saudi seasons do to revenue?",
@@ -349,7 +364,8 @@ const PROJECTS = [
               "The same sales channel was recorded two ways (“WhatsApp Orders” and “WhatsApp”). I standardised it in Power Query so channel shares add up correctly.",
               "Monthly targets sit in their own fact table, linked to the same date and region tables as sales, so actual vs target follows every filter."],
    dax:["CALCULATE","SUM","COUNTROWS","DIVIDE","SAMEPERIODLASTYEAR"],
-   tags:["Power BI","Power Query","DAX","Seasonality","Retail"] },
+   gallery:[{label:"Data model",src:"img/retail_model.png",bg:"#E6E6E6"},{label:"Power Query",src:"img/retail_pq.jpg",bg:"#F3F2F1"},{label:"Tooltip",src:"img/retail_tooltip.jpg",bg:"#0B1238"}],
+   tags:["Power BI","Power Query","DAX"] },
  { id:"sales", cat:"sales", img:"img/sales.jpg",
    title:"Sales & Customer Analytics",
    blurb:"Which channels, customers and products drive revenue?",
@@ -358,10 +374,11 @@ const PROJECTS = [
    found:["Online drove 93.3% of revenue (SAR 92M) vs 6.7% from stores.",
           "Loyal customers brought SAR 49M, retail SAR 33M, new customers SAR 16M.",
           "December is the peak month, followed by July."],
-   built:["Cleaned the raw sales data in Power Query: set data types, removed unused columns, blank rows and duplicates, and replaced inconsistent values.",
+   built:["Cleaned the raw sales data in Power Query: set data types, removed unused columns, blank rows and duplicates.",
           "City-level map, dynamic slicers, animated icons and reset bookmarks."],
    data:"Single table · synthetic training-course data",
-   tags:["Power BI","Power Query","Maps","Sales"] }
+   gallery:[{label:"Power Query",src:"img/sales_pq.jpg",bg:"#F3F2F1"}],
+   tags:["Power BI","Power Query"] }
 ];
 const QA = [
  ["Who are you, in one line?","A PL-300 certified Data Analyst in Riyadh who builds Power BI dashboards that start from a business question and end with a clear finding."],
@@ -418,7 +435,8 @@ document.getElementById("seg").onclick=e=>{const b=e.target.closest("button");if
 const sheet=document.getElementById("sheet"),scrim=document.getElementById("scrim"),body=document.getElementById("sheetBody");
 function openSheet(p){
  body.innerHTML=`<h3>${p.title}</h3><p class="sub">${p.blurb}</p>
- <div class="frame" id="frame"><img src="${p.img}" alt="${p.title}"></div>
+ <div class="frame" id="frame"><img id="fImg" src="${p.img}" alt="${p.title}"><span class="zoom" id="fZoom" hidden>Tap to enlarge</span></div>
+ ${p.gallery?`<div class="gal glass" id="gal"><button class="on" data-i="-1">Dashboard</button>${p.gallery.map((g,i)=>`<button data-i="${i}">${g.label}</button>`).join("")}</div>`:""}
  <div class="cta" style="margin:0 0 22px">
    ${p.live?`<a class="btn p" href="${p.live}" target="_blank" rel="noopener">View live dashboard ↗</a>`:""}
  </div>
@@ -430,10 +448,22 @@ function openSheet(p){
    ${p.challenge?`<div class="panel"><h4>Challenges I solved</h4><ul>${p.challenge.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}
    ${p.recommend?`<div class="panel rec"><h4>What I’d recommend</h4><ul>${p.recommend.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:""}
  </div>`:""}`;
+ {const fi=document.getElementById("fImg"),fr=document.getElementById("frame");
+  const setAR=()=>{if(!fi.classList.contains("fit")&&fi.naturalWidth)fr.style.aspectRatio=fi.naturalWidth+"/"+fi.naturalHeight};
+  fi.onload=setAR;if(fi.complete)setAR()}
+ document.getElementById("fImg").onclick=e=>{const lb=document.getElementById("lb"),li=document.getElementById("lbImg");
+  li.src=e.target.src;li.style.background=e.target.classList.contains("fit")?(document.getElementById("frame").style.background||"#fff"):"transparent";lb.classList.add("on")};
+ const gal=document.getElementById("gal");
+ if(gal)gal.onclick=e=>{const btn=e.target.closest("button");if(!btn)return;
+  gal.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===btn));
+  const i=+btn.dataset.i,g=i<0?{src:p.img}:p.gallery[i],im=document.getElementById("fImg"),fr=document.getElementById("frame");
+  im.src=g.src;im.classList.toggle("fit",i>=0);
+  fr.style.background=i<0?"":(g.bg||"#fff");document.getElementById("fZoom").hidden=i<0};
  sheet.classList.add("on");scrim.classList.add("on");document.body.style.overflow="hidden"}
 function closeSheet(){sheet.classList.remove("on");scrim.classList.remove("on");document.body.style.overflow=""}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
 scrim.onclick=closeSheet;document.getElementById("x").onclick=closeSheet;
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeSheet()});
+document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;const lb=document.getElementById("lb");if(lb.classList.contains("on"))lb.classList.remove("on");else closeSheet()});
 
 /* copy email */
 const copyMail=async()=>{
