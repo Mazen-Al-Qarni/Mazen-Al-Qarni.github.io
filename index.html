@@ -147,11 +147,11 @@ h2{font-size:clamp(30px,4vw,44px);letter-spacing:-.03em;margin:6px 0 10px}
 /* sheet */
 .scrim{position:fixed;inset:0;background:rgba(2,6,18,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:.3s;z-index:80}
 .scrim.on{opacity:1;pointer-events:auto}
-.sheet{position:fixed;left:50%;bottom:0;transform:translate(-50%,105%);width:min(980px,100%);max-height:92vh;overflow:auto;z-index:90;
+.sheet{position:fixed;left:50%;bottom:0;transform:translate(-50%,105%);width:min(980px,100%);max-height:92vh;max-height:calc(100dvh - 16px);overscroll-behavior:contain;overflow:auto;z-index:90;
   border-radius:30px 30px 0 0;padding:14px 26px 30px;transition:transform .45s cubic-bezier(.2,.8,.2,1);background:linear-gradient(160deg,rgba(30,42,78,.86),rgba(12,20,44,.9))}
 .sheet.on{transform:translate(-50%,0)}
 .grab{width:44px;height:5px;border-radius:9px;background:rgba(255,255,255,.3);margin:0 auto 16px}
-.x{position:absolute;right:16px;top:12px;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.12);font-size:18px}
+.x{position:sticky;top:6px;float:right;margin:-14px -10px 0 0;z-index:6;width:42px;height:42px;border-radius:50%;background:rgba(28,40,74,.92);border:1px solid rgba(255,255,255,.16);font-size:18px;box-shadow:0 4px 14px rgba(0,0,0,.35)}
 .sheet h3{font-size:26px;letter-spacing:-.02em;margin-bottom:4px}
 .frame{margin:18px 0;border-radius:20px;overflow:hidden;border:1px solid var(--stroke);aspect-ratio:16/9.6;background:#0B1430}
 .frame img,.frame iframe{width:100%;height:100%;border:0;display:block;object-fit:cover;object-position:top}
@@ -159,10 +159,12 @@ h2{font-size:clamp(30px,4vw,44px);letter-spacing:-.03em;margin:6px 0 10px}
 .frame img{cursor:zoom-in}
 .frame img.fit{object-fit:contain;object-position:center}
 .frame .zoom{position:absolute;right:10px;bottom:10px;font-size:12px;padding:5px 10px;border-radius:99px;background:rgba(3,7,22,.72);color:#fff;pointer-events:none}
-.lb{position:fixed;inset:0;z-index:200;background:rgba(3,7,22,.94);display:none;align-items:center;justify-content:center;padding:60px 12px 20px}
-.lb.on{display:flex}
-.lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;background:#fff}
-.lb button{position:absolute;top:14px;right:14px;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:20px}
+.lb{position:fixed;inset:0;z-index:200;background:#030716;display:none;touch-action:pan-x pan-y;overscroll-behavior:contain}
+.lb.on{display:block}
+.lbWrap{position:absolute;top:66px;bottom:38px;left:0;right:0;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;touch-action:pan-x pan-y}
+.lbWrap img{margin:auto;display:block;max-width:none;border-radius:10px;flex:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.lb button{position:absolute;top:14px;right:14px;z-index:2;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:20px}
+.lbHint{position:absolute;left:0;right:0;bottom:12px;text-align:center;font-size:12px;color:rgba(255,255,255,.55)}
 .gal{display:inline-flex;padding:4px;border-radius:14px;gap:2px;margin:-6px 0 18px;flex-wrap:wrap}
 .gal button{padding:7px 14px;border-radius:11px;font-size:13px;color:var(--mut);transition:.25s}
 @media(max-width:520px){.gal button{padding:7px 10px;font-size:12.5px}}
@@ -306,7 +308,7 @@ footer{color:var(--faint);font-size:13px;text-align:center;padding:30px 0 50px}
 
 <div class="scrim" id="scrim"></div>
 <div class="sheet glass" id="sheet" role="dialog" aria-modal="true"><div class="grab"></div><button class="x" id="x" aria-label="Close">✕</button><div id="sheetBody"></div></div>
-<div class="lb" id="lb"><button id="lbX" aria-label="Close">✕</button><img id="lbImg" alt=""></div>
+<div class="lb" id="lb" role="dialog" aria-modal="true"><button id="lbX" aria-label="Close">✕</button><div class="lbWrap" id="lbWrap"><img id="lbImg" alt=""></div><div class="lbHint">Pinch or double-tap to zoom</div></div>
 <div class="toast glass" id="toast">Email copied ✓</div>
 
 <script>
@@ -451,8 +453,7 @@ function openSheet(p){
  {const fi=document.getElementById("fImg"),fr=document.getElementById("frame");
   const setAR=()=>{if(!fi.classList.contains("fit")&&fi.naturalWidth)fr.style.aspectRatio=fi.naturalWidth+"/"+fi.naturalHeight};
   fi.onload=setAR;if(fi.complete)setAR()}
- document.getElementById("fImg").onclick=e=>{const lb=document.getElementById("lb"),li=document.getElementById("lbImg");
-  li.src=e.target.src;li.style.background=e.target.classList.contains("fit")?(document.getElementById("frame").style.background||"#fff"):"transparent";lb.classList.add("on")};
+ document.getElementById("fImg").onclick=e=>openLB(e.target.src,e.target.classList.contains("fit")?(document.getElementById("frame").style.background||"#fff"):"transparent");
  const gal=document.getElementById("gal");
  if(gal)gal.onclick=e=>{const btn=e.target.closest("button");if(!btn)return;
   gal.querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===btn));
@@ -461,9 +462,35 @@ function openSheet(p){
   fr.style.background=i<0?"":(g.bg||"#fff");document.getElementById("fZoom").hidden=i<0};
  sheet.classList.add("on");scrim.classList.add("on");document.body.style.overflow="hidden"}
 function closeSheet(){sheet.classList.remove("on");scrim.classList.remove("on");document.body.style.overflow=""}
-document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+/* image viewer with its own zoom, so the page itself never zooms */
+const lb=document.getElementById("lb"),lbWrap=document.getElementById("lbWrap"),lbImg=document.getElementById("lbImg");
+let lbScale=1,lbBase=0;
+function lbFit(){const W=lbWrap.clientWidth-20,H=lbWrap.clientHeight-20,r=(lbImg.naturalWidth||16)/(lbImg.naturalHeight||9);lbBase=Math.min(W,H*r)}
+function lbSet(sc,cx,cy){const old=lbScale;lbScale=Math.min(5,Math.max(1,sc));
+ if(cx==null){cx=lbWrap.clientWidth/2;cy=lbWrap.clientHeight/2}
+ const k=lbScale/old,sl=lbWrap.scrollLeft,st=lbWrap.scrollTop;
+ lbImg.style.width=(lbBase*lbScale)+"px";
+ lbWrap.scrollLeft=(sl+cx)*k-cx;lbWrap.scrollTop=(st+cy)*k-cy}
+function openLB(src,bg){lbImg.style.background=bg;lbScale=1;lbImg.onload=()=>{lbFit();lbImg.style.width=lbBase+"px"};lbImg.src=src;
+ if(lbImg.complete&&lbImg.naturalWidth){lbFit();lbImg.style.width=lbBase+"px"}
+ lb.classList.add("on");lbWrap.scrollTop=0;lbWrap.scrollLeft=0}
+function closeLB(){lb.classList.remove("on")}
+document.getElementById("lbX").onclick=closeLB;
+let pinch=null,lastTap=0;
+lbWrap.addEventListener("touchstart",e=>{
+ if(e.touches.length===2){const[a,b]=e.touches,r=lbWrap.getBoundingClientRect();
+  pinch={d:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY),s:lbScale,cx:(a.clientX+b.clientX)/2-r.left,cy:(a.clientY+b.clientY)/2-r.top}}
+ else if(e.touches.length===1){const t=Date.now(),r=lbWrap.getBoundingClientRect(),p=e.touches[0];
+  if(t-lastTap<300){e.preventDefault();lbSet(lbScale>1.05?1:2.5,p.clientX-r.left,p.clientY-r.top);lastTap=0}else lastTap=t}},{passive:false});
+lbWrap.addEventListener("touchmove",e=>{if(pinch&&e.touches.length===2){e.preventDefault();const[a,b]=e.touches;
+ const d=Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY);lbSet(pinch.s*d/pinch.d,pinch.cx,pinch.cy)}},{passive:false});
+lbWrap.addEventListener("touchend",e=>{if(e.touches.length<2)pinch=null});
+lbWrap.addEventListener("dblclick",e=>{const r=lbWrap.getBoundingClientRect();lbSet(lbScale>1.05?1:2.5,e.clientX-r.left,e.clientY-r.top)});
+lbWrap.addEventListener("wheel",e=>{if(!e.ctrlKey)return;e.preventDefault();const r=lbWrap.getBoundingClientRect();lbSet(lbScale*(e.deltaY<0?1.15:.87),e.clientX-r.left,e.clientY-r.top)},{passive:false});
+["gesturestart","gesturechange"].forEach(t=>document.addEventListener(t,e=>{if(lb.classList.contains("on"))e.preventDefault()},{passive:false}));
+window.addEventListener("resize",()=>{if(lb.classList.contains("on")){lbFit();lbImg.style.width=(lbBase*lbScale)+"px"}});
 scrim.onclick=closeSheet;document.getElementById("x").onclick=closeSheet;
-document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;const lb=document.getElementById("lb");if(lb.classList.contains("on"))lb.classList.remove("on");else closeSheet()});
+document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;if(lb.classList.contains("on"))closeLB();else closeSheet()});
 
 /* copy email */
 const copyMail=async()=>{
